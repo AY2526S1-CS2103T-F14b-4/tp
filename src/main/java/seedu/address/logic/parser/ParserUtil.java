@@ -109,7 +109,6 @@ public class ParserUtil {
         }
         return new Tag(trimmedTag);
     }
-
     /**
      * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
@@ -117,7 +116,14 @@ public class ParserUtil {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
+            String[] splitTags = tagName.split(",");
+            for (String tag : splitTags) {
+                String trimmedTag = tag.trim();
+                if (trimmedTag.isEmpty() || !Tag.isValidTagName(trimmedTag)) {
+                    throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
+                }
+                tagSet.add(new Tag(trimmedTag));
+            }
         }
         return tagSet;
     }
