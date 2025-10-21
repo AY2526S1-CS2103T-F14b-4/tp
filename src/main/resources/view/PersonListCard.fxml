@@ -33,6 +33,7 @@
       <Label fx:id="email" styleClass="cell_small_label" text="\$email" />
       <Label fx:id="country" styleClass="cell_small_label" text="$country" />
       <Label fx:id="culture" styleClass="cell_small_label" text="$culture" />
+      <Label fx:id="gmtOffset" styleClass="cell_small_label" text="$gmtOffset"/>
       <Label fx:id="channel" styleClass="cell_small_label" text="$channel" />
     </VBox>
   </GridPane>

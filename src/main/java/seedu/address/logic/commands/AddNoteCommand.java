@@ -60,8 +60,9 @@ public class AddNoteCommand extends Command {
             personToEdit.getEmail(),
             personToEdit.getAddress(),
             personToEdit.getCountry(),
-            culture,
-            personToEdit.getTags()
+                culture,
+            personToEdit.getTags(),
+                personToEdit.getGmtOffset()
         );
 
         model.setPerson(personToEdit, editedPerson);

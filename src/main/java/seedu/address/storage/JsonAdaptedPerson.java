@@ -17,6 +17,7 @@ import seedu.address.model.person.Country;
 import seedu.address.model.person.Culture;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Offset;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -34,6 +35,7 @@ class JsonAdaptedPerson {
     private final String address;
     private final String country;
     private final String culture;
+    private final String offset;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
 
     /**
@@ -43,6 +45,7 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
             @JsonProperty("email") String email, @JsonProperty("address") String address,
             @JsonProperty("country") String country, @JsonProperty("culture") String culture,
+            @JsonProperty("offset") String offset,
             @JsonProperty("tags") List<JsonAdaptedTag> tags) {
         this.name = name;
         this.phone = phone;
@@ -50,6 +53,7 @@ class JsonAdaptedPerson {
         this.address = address;
         this.country = country;
         this.culture = culture;
+        this.offset = offset;
         if (tags != null) {
             this.tags.addAll(tags);
         }
@@ -65,6 +69,7 @@ class JsonAdaptedPerson {
         address = source.getAddress().value;
         country = source.getCountry() != null ? source.getCountry().toString() : null;
         culture = source.getCulture().value;
+        offset = source.getGmtOffset().value;
         tags.addAll(source.getTags().stream()
                 .map(JsonAdaptedTag::new)
                 .collect(Collectors.toList()));
@@ -117,13 +122,25 @@ class JsonAdaptedPerson {
 
         final Culture modelCulture = (culture == null) ? new Culture("") : new Culture(culture);
 
+        final Offset modelOffset;
+        if (offset == null || offset.isEmpty()) {
+            modelOffset = new Offset("+00:00"); // default UTC
+        } else {
+            try {
+                modelOffset = new Offset(offset);
+            } catch (IllegalArgumentException e) {
+                throw new IllegalValueException("Invalid GMT offset: " + offset
+                        + ". Must be in the format +HH:MM or -HH:MM, where HH is 00-14 and MM is 00-59.");
+            }
+        }
+
         if (!isNull(country) && !Country.isValidCountry(country)) {
             throw new IllegalValueException(Address.MESSAGE_CONSTRAINTS);
         }
         final Country modelCountry = isNull(country) ? null : new Country(country);
 
         final Set<Tag> modelTags = new HashSet<>(personTags);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelCountry, modelCulture, modelTags);
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelCountry, modelCulture, modelTags, modelOffset);
     }
 
 }

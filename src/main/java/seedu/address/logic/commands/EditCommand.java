@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GMT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COUNTRY;
@@ -29,6 +30,7 @@ import seedu.address.model.person.Country;
 import seedu.address.model.person.Culture;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Offset;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -53,6 +55,7 @@ public class EditCommand extends Command {
             + "[" + PREFIX_NOTE + "NOTE] "
             + "[" + PREFIX_CHANNEL + "PREFERRED CHANNEL] "
             + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_GMT + "GMT] "
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -110,12 +113,13 @@ public class EditCommand extends Command {
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Country updatedCountry = editPersonDescriptor.getCountry().orElse(personToEdit.getCountry());
         Culture updatedCulture = personToEdit.getCulture();
+        Offset updatedOffset = editPersonDescriptor.getOffset().orElse(personToEdit.getGmtOffset());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         CommunicationChannel updatedChannel = editPersonDescriptor.getChannel()
                 .orElse(personToEdit.getPreferredChannel());
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedCountry,
-                updatedCulture, updatedChannel, updatedTags);
+                updatedCulture, updatedChannel, updatedTags, updatedOffset);
     }
 
     @Override
@@ -155,6 +159,7 @@ public class EditCommand extends Command {
         private Country country;
         private Set<Tag> tags;
         private CommunicationChannel channel;
+        private Offset offset;
 
         public EditPersonDescriptor() {
         }
@@ -171,6 +176,7 @@ public class EditCommand extends Command {
             setCountry(toCopy.country);
             setTags(toCopy.tags);
             setChannel(toCopy.channel);
+            setOffset(toCopy.offset);
         }
 
         public void setChannel(CommunicationChannel channel) {
@@ -185,7 +191,7 @@ public class EditCommand extends Command {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(name, phone, email, address, country, tags, channel);
+            return CollectionUtil.isAnyNonNull(name, phone, email, address, country, tags, channel, offset);
         }
 
         public void setName(Name name) {
@@ -228,6 +234,10 @@ public class EditCommand extends Command {
             return Optional.ofNullable(country);
         }
 
+        public void setOffset(Offset offset) { this.offset = offset; }
+
+        public Optional<Offset> getOffset() { return Optional.ofNullable(offset); }
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -264,7 +274,8 @@ public class EditCommand extends Command {
                     && Objects.equals(address, otherEditPersonDescriptor.address)
                     && Objects.equals(country, otherEditPersonDescriptor.country)
                     && Objects.equals(tags, otherEditPersonDescriptor.tags)
-                    && Objects.equals(channel, otherEditPersonDescriptor.channel);
+                    && Objects.equals(channel, otherEditPersonDescriptor.channel)
+                    && Objects.equals(offset, otherEditPersonDescriptor.offset);
         }
 
         @Override
@@ -277,6 +288,7 @@ public class EditCommand extends Command {
                     .add("country", country)
                     .add("tags", tags)
                     .add("channel", channel)
+                    .add("offset", offset)
                     .toString();
         }
     }

@@ -4,6 +4,7 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GMT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
@@ -41,7 +42,8 @@ public class AddCommand extends Command {
         + PREFIX_COUNTRY + "Singapore "
         + PREFIX_NOTE + "Prefers WhatsApp "
         + PREFIX_TAG + "friends "
-        + PREFIX_TAG + "owesMoney";
+        + PREFIX_TAG + "owesMoney"
+            + PREFIX_GMT + "+08:00";
 
 
     public static final String MESSAGE_SUCCESS = "New person added: %1$s";

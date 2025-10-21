@@ -29,19 +29,21 @@ public class Person {
     private final Culture culture;
     private final Set<Tag> tags = new HashSet<>();
     private final CommunicationChannel preferredChannel;
+    private final Offset gmtOffset;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address, Country country,
-            Culture culture, CommunicationChannel preferredChannel, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, culture, tags);
+            Culture culture, CommunicationChannel preferredChannel, Set<Tag> tags, Offset gmtOffset) {
+        requireAllNonNull(name, phone, email, address, culture, tags, gmtOffset);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
         this.country = country;
         this.culture = culture;
+        this.gmtOffset = gmtOffset;
         this.preferredChannel = preferredChannel;
         this.tags.addAll(tags);
 
@@ -58,8 +60,9 @@ public class Person {
      * If both culture notes and country is included in initialisation.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-            Country country, Culture culture, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, culture, tags);
+                  Country country, Culture culture, Set<Tag> tags, Offset gmtOffset) {
+        this.gmtOffset = gmtOffset;
+        requireAllNonNull(name, phone, email, address, culture, tags, gmtOffset);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -110,6 +113,10 @@ public class Person {
 
     public Country getCountry() {
         return country;
+    }
+
+    public Offset getGmtOffset() {
+        return gmtOffset;
     }
 
     /**

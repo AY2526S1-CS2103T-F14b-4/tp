@@ -48,6 +48,8 @@ public class PersonCard extends UiPart<Region> {
     private Label culture;
     @FXML
     private Label channel;
+    @FXML
+    private Label gmtOffset;
 
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to
@@ -76,6 +78,14 @@ public class PersonCard extends UiPart<Region> {
         } else {
             channel.setVisible(false);
             channel.setManaged(false);
+        }
+
+        if(person.getGmtOffset() != null) {
+            gmtOffset.setVisible(true);
+            gmtOffset.setText("GMT" + person.getGmtOffset());
+        } else {
+            gmtOffset.setVisible(false);
+            gmtOffset.setManaged(false);
         }
 
         if (!person.getCountry().value.equals("")) {
