@@ -8,6 +8,7 @@ import seedu.address.model.person.Country;
 import seedu.address.model.person.Culture;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Offset;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
@@ -24,6 +25,7 @@ public class PersonBuilder {
     public static final String DEFAULT_ADDRESS = "123, Jurong West Ave 6, #08-111";
     public static final String DEFAULT_COUNTRY = "Singapore";
     public static final String DEFAULT_CULTURE = "";
+    public static final String DEFAULT_OFFSET = "+00:00";
 
     private Name name;
     private Phone phone;
@@ -32,6 +34,7 @@ public class PersonBuilder {
     private Country country;
     private Culture culture;
     private Set<Tag> tags;
+    private Offset offset;
 
     /**
      * Creates a {@code PersonBuilder} with the default details.
@@ -44,6 +47,7 @@ public class PersonBuilder {
         country = new Country(DEFAULT_COUNTRY);
         culture = new Culture(DEFAULT_CULTURE);
         tags = new HashSet<>();
+        offset = new Offset(DEFAULT_OFFSET);
     }
 
     /**
@@ -57,6 +61,7 @@ public class PersonBuilder {
         country = personToCopy.getCountry();
         culture = personToCopy.getCulture();
         tags = new HashSet<>(personToCopy.getTags());
+        offset = personToCopy.getGmtOffset();
     }
 
     /**
@@ -116,8 +121,13 @@ public class PersonBuilder {
         return this;
     }
 
+    public PersonBuilder withOffset(String offset) {
+        this.offset = new Offset(offset);
+        return this;
+    }
+
     public Person build() {
-        return new Person(name, phone, email, address, country, culture, tags);
+        return new Person(name, phone, email, address, country, culture, tags, offset);
     }
 
 }

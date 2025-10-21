@@ -2,6 +2,7 @@ package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CHANNEL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_COUNTRY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_GMT;
@@ -9,11 +10,9 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOTE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_CHANNEL;
 
 import java.util.Set;
 import java.util.stream.Stream;
-import java.util.logging.Logger;
 
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -22,15 +21,24 @@ import seedu.address.model.person.Country;
 import seedu.address.model.person.Culture;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.Offset;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.person.Offset;
 
 /**
  * Parses input arguments and creates a new AddCommand object as a result
  */
 public class AddCommandParser implements Parser<AddCommand> {
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values
+     * in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddCommand
@@ -62,41 +70,33 @@ public class AddCommandParser implements Parser<AddCommand> {
         if (argMultimap.getValue(PREFIX_CHANNEL).isPresent()) {
             String channelInput = argMultimap.getValue(PREFIX_CHANNEL).get().toUpperCase();
             switch (channelInput) {
-                case "PHONE":
-                    preferredChannel = Person.CommunicationChannel.PHONE;
-                    break;
-                case "EMAIL":
-                    preferredChannel = Person.CommunicationChannel.EMAIL;
-                    break;
-                case "SMS":
-                    preferredChannel = Person.CommunicationChannel.SMS;
-                    break;
-                case "WHATSAPP":
-                    preferredChannel = Person.CommunicationChannel.WHATSAPP;
-                    break;
-                case "TELEGRAM":
-                    preferredChannel = Person.CommunicationChannel.TELEGRAM;
-                    break;
-                default:
-                    throw new ParseException("Invalid communication channel. Choose another channel.");
+            case "PHONE":
+                preferredChannel = Person.CommunicationChannel.PHONE;
+                break;
+            case "EMAIL":
+                preferredChannel = Person.CommunicationChannel.EMAIL;
+                break;
+            case "SMS":
+                preferredChannel = Person.CommunicationChannel.SMS;
+                break;
+            case "WHATSAPP":
+                preferredChannel = Person.CommunicationChannel.WHATSAPP;
+                break;
+            case "TELEGRAM":
+                preferredChannel = Person.CommunicationChannel.TELEGRAM;
+                break;
+            default:
+                throw new ParseException("Invalid communication channel. Choose another channel.");
             }
         }
 
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
 
         Person.CommunicationChannel finalPreferredChannel = preferredChannel;
-        Person person = new Person(name, phone, email, address, country, culture, finalPreferredChannel, tagList, gmtOffset);
+        Person person = new Person(name, phone, email, address, country, culture, finalPreferredChannel, tagList,
+                gmtOffset);
 
         return new AddCommand(person);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values
-     * in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 
 }

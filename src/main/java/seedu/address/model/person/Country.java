@@ -12,12 +12,14 @@ import java.util.Set;
  */
 public class Country {
 
-    public static final String MESSAGE_CONSTRAINTS = "Country names are case sensitive and should match the list of countries available in the help window (type help to view).";
+    public static final String MESSAGE_CONSTRAINTS = "Country names are case sensitive and should match the list of "
+            + "countries available in the help window (type help to view).";
 
     /*
      * Allows alphabetic words separated by spaces.
      */
-    public static final String VALIDATION_REGEX = "([\\p{L}][\\p{L} '\\-,.&()]*|\\p{L}+([\\p{L} '\\-,.&()]*[\\p{L}])?)?";
+    public static final String VALIDATION_REGEX = "([\\p{L}][\\p{L} '\\-,.&()]*|\\p{L}+"
+            + "([\\p{L} '\\-,.&()]*[\\p{L}])?)?";
 
     /*
      * Construct set of valid country names for validation matching.
@@ -64,11 +66,10 @@ public class Country {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof Country)) {
+        if (!(other instanceof Country otherCountry)) {
             return false;
         }
 
-        Country otherCountry = (Country) other;
         return value.equals(otherCountry.value);
     }
 

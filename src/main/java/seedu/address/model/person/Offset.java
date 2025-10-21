@@ -3,8 +3,6 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.time.ZoneOffset;
-import seedu.address.logic.parser.exceptions.ParseException;
-
 
 /**
  * Represents a GMT offset for a person.
@@ -14,11 +12,11 @@ public class Offset implements Comparable<Offset> {
 
     public static final String MESSAGE_CONSTRAINTS =
             "GMT offset must be in the format +HH:MM or -HH:MM, where HH is 00-14 and MM is 00-59.";
-
     public static final String VALIDATION_REGEX = "^[+-](?:0\\d|1[0-4]):[0-5]\\d$";
 
-    private final int totalMinutes; // offset in minutes
     public String value;
+    private final int totalMinutes; // offset in minutes
+
 
     /**
      * Constructs an {@code Offset} from a string.
@@ -72,8 +70,12 @@ public class Offset implements Comparable<Offset> {
 
     @Override
     public boolean equals(Object other) {
-        if (other == this) return true;
-        if (!(other instanceof Offset o)) return false;
+        if (other == this) {
+            return true;
+        }
+        if (!(other instanceof Offset o)) {
+            return false;
+        }
         return value.equals(o.value);
     }
 

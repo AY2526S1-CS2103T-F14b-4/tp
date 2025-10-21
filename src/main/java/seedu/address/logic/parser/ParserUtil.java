@@ -16,9 +16,9 @@ import seedu.address.model.person.Culture;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Offset;
+import seedu.address.model.person.Person.CommunicationChannel;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
-import seedu.address.model.person.Person.CommunicationChannel;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser
@@ -161,6 +161,20 @@ public class ParserUtil {
         return tagSet;
     }
 
+    /**
+     * Parses a string representation of a communication channel and returns the corresponding enum constant.
+     *
+     * <p>The input string is case-insensitive and leading/trailing whitespace is ignored.
+     * Valid channel values are: EMAIL, WHATSAPP, TELEGRAM.
+     *
+     * @param channel the string to parse into a CommunicationChannel enum constant
+     * @return the parsed CommunicationChannel enum constant, or {@code null} if the input is empty or contains only
+     * whitespace
+     * @throws ParseException if the input string does not match any valid CommunicationChannel constant
+     * @throws NullPointerException if the input channel is {@code null}
+     *
+     * @see CommunicationChannel
+     */
     public static CommunicationChannel parseChannel(String channel) throws ParseException {
         requireNonNull(channel);
         String trimmedChannel = channel.trim();
