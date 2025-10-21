@@ -79,6 +79,9 @@ public class Person {
         }
     }
 
+    /**
+     * Enumeration storing all possible communication channels.
+     */
     public enum CommunicationChannel {
         PHONE,
         EMAIL,
