@@ -5,11 +5,11 @@ import static java.util.Objects.requireNonNull;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.PersonContainsTagsPredicate;
 
 /**
- * Finds and lists all persons in address book whose tag contains ALL of the argument keywords.
+ * Finds and lists all persons in address book whose tag contains ALL of the
+ * argument keywords.
  * Keyword matching is case insensitive.
  */
 public class FindTagCommand extends Command {

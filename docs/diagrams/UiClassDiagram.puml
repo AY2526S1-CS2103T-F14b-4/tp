@@ -12,7 +12,11 @@ Class MainWindow
 Class HelpWindow
 Class ResultDisplay
 Class PersonListPanel
-Class PersonCard
+Class PersonCard {
+    +name : Label
+    +phone : Label
+    ..> "CSS class: bold-label"
+}
 Class StatusBarFooter
 Class CommandBox
 }

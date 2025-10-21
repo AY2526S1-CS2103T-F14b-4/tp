@@ -350,3 +350,23 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
+
+#tags .label {
+    -fx-text-fill: white;
+    -fx-padding: 3 7 3 7;
+    -fx-background-radius: 5;
+    -fx-font-size: 11;
+}
+
+#tags .country-tag {
+    -fx-background-color: #2196F3; /* blue */
+    -fx-font-weight: bold;
+}
+
+#tags .normal-tag {
+    -fx-background-color: #9E9E9E; /* grey */
+}
+
+.bold-label {
+    -fx-font-weight: bold;
+}

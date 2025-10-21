@@ -29,7 +29,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
         }
 
         String[] tagKeywords = trimmedArgs.split("\\s+");
-        List<Tag> tagList= new ArrayList<>();
+        List<Tag> tagList = new ArrayList<>();
         for (String s : tagKeywords) {
             tagList.add(new Tag(s));
         }
