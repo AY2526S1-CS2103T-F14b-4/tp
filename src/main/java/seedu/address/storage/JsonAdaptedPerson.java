@@ -56,7 +56,6 @@ class JsonAdaptedPerson {
                              @JsonProperty("offset") String offset,
                              @JsonProperty("tags") List<JsonAdaptedTag> tags,
                              @JsonProperty("metOn") String metOn,
-                             @JsonProperty("tags") List<JsonAdaptedTag> tags,
                              @JsonProperty("archivalStatus") boolean archivalStatus,
                              @JsonProperty("preferredLanguage") String preferredLanguage) {
         this.name = name;
