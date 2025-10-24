@@ -1,5 +1,6 @@
 package seedu.address.model.util;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,6 +10,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Country;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MetOn;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Note;
 import seedu.address.model.person.Offset;
@@ -30,7 +32,7 @@ public class SampleDataUtil {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                     new Address("Blk 30 Geylang Street 29, #06-40"), new Country("Singapore"),
                     new Note("follows Chinese Traditions"), Person.CommunicationChannel.EMAIL,
-                    getTagSet("friends"), new Offset("+08:00"), new PreferredLanguage("english"))
+                    getTagSet("friends"), new Offset("+08:00"), new MetOn(LocalDateTime.now()), false, new PreferredLanguage("english"))
         };
     }
 

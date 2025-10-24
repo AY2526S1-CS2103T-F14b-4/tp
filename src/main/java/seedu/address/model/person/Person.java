@@ -2,6 +2,7 @@ package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
@@ -26,20 +27,20 @@ public class Person {
     // Data fields
     private final Address address;
     private final Country country;
+    private final MetOn metOn;
     private final Note note;
     private final Set<Tag> tags = new HashSet<>();
     private final CommunicationChannel preferredChannel;
     private final Offset offset;
     private final PreferredLanguage preferredLanguage;
-
+    private final boolean isArchived;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Country country,
-                  Note note, CommunicationChannel preferredChannel, Set<Tag> tags, Offset offset,
-                  PreferredLanguage preferredLanguage) {
-        requireAllNonNull(name, phone, email, address, note, tags, offset);
+    public Person(Name name, Phone phone, Email email, Address address, Country country,               
+            Note note, CommunicationChannel preferredChannel, Set<Tag> tags, Offset offset, MetOn metOn, boolean isArchived, PreferredLanguage preferredLanguage) {
+        requireAllNonNull(name, phone, email, address, note, tags, offset, metOn);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -50,6 +51,8 @@ public class Person {
         this.tags.addAll(tags);
         this.offset = offset;
         this.preferredLanguage = preferredLanguage;
+        this.isArchived = isArchived;
+        this.metOn = metOn;
 
         removeOldCountryTags();
 
@@ -64,9 +67,8 @@ public class Person {
      * If both note notes and country is included in initialisation.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  Country country, Note note, Set<Tag> tags, Offset offset,
-                  PreferredLanguage preferredLanguage) {
-        requireAllNonNull(name, phone, email, address, note, tags, offset);
+                  Country country, Note note, Set<Tag> tags, Offset offset, MetOn metOn, boolean isArchived, PreferredLanguage preferredLanguage) {
+        requireAllNonNull(name, phone, email, address, note, tags, offset, metOn);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -77,6 +79,8 @@ public class Person {
         this.tags.addAll(tags);
         this.offset = offset;
         this.preferredLanguage = preferredLanguage;
+        this.isArchived = isArchived;
+        this.metOn = metOn;
 
         removeOldCountryTags();
 
@@ -131,6 +135,10 @@ public class Person {
     }
 
 
+    public boolean getArchivalStatus() {
+        return isArchived;
+    }
+
     /**
      * Returns an immutable tag set, which throws
      * {@code UnsupportedOperationException}
@@ -142,6 +150,10 @@ public class Person {
 
     public Offset getOffset() {
         return offset;
+    }
+
+    public MetOn getMetOn() {
+        return metOn;
     }
 
     /**
@@ -191,7 +203,6 @@ public class Person {
                 && phone.equals(otherPerson.phone)
                 && email.equals(otherPerson.email)
                 && address.equals(otherPerson.address)
-                && note.equals(otherPerson.note)
                 && country.equals(otherPerson.country)
                 && note.equals(otherPerson.note)
                 && tags.equals(otherPerson.tags)
@@ -216,10 +227,11 @@ public class Person {
                 .add("tags", tags)
                 .add("preferredChannel", preferredChannel)
                 .add("offset", offset)
-                .add("preferredLanguage", preferredLanguage == null ? "-" : preferredLanguage)
                 .add("suggestedGreeting", preferredLanguage == null
                         ? "-"
                         : GreetingLibrary.getGreeting(preferredLanguage.toString()))
+                .add("metOn", metOn)
+                .add("preferredLanguage", preferredLanguage == null ? "-" : preferredLanguage)
                 .toString();
     }
 

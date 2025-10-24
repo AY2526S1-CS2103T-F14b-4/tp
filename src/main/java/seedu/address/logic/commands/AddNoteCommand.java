@@ -1,7 +1,7 @@
 package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_UNARCHIVED;
 
 import java.util.List;
 
@@ -19,8 +19,9 @@ public class AddNoteCommand extends Command {
     public static final String COMMAND_WORD = "addnote";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds or updates a note for the specified person. "
-        + "Parameters: name: <name> note: <note text>\n"
-        + "Example: " + COMMAND_WORD + " name: John Doe note: Prefers to communicate on Telegram, loves Nasi Lemak.";
+            + "Parameters: name: <name> note: <note text>\n"
+            + "Example: " + COMMAND_WORD
+            + " name: John Doe note: Prefers to communicate on Telegram, loves Nasi Lemak.";
 
     public static final String MESSAGE_ADD_NOTE_SUCCESS = "Added note to Person: %1$s";
     public static final String MESSAGE_DELETE_NOTE_SUCCESS = "Removed note from Person: %1$s";
@@ -45,9 +46,9 @@ public class AddNoteCommand extends Command {
 
         // Find the person with the matching name
         Person personToEdit = allPersons.stream()
-            .filter(p -> p.getName().equals(name))
-            .findFirst()
-            .orElse(null);
+                .filter(p -> p.getName().equals(name))
+                .findFirst()
+                .orElse(null);
 
         if (personToEdit == null) {
             throw new CommandException(String.format(MESSAGE_PERSON_NOT_FOUND, name.fullName));
@@ -63,30 +64,32 @@ public class AddNoteCommand extends Command {
             note,
             personToEdit.getTags(),
             personToEdit.getOffset(),
-                personToEdit.getPreferredLanguage()
+            personToEdit.getMetOn(), false,
+            personToEdit.getPreferredLanguage()
         );
 
         model.setPerson(personToEdit, editedPerson);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_UNARCHIVED);
 
         return new CommandResult(generateSuccessMessage(editedPerson));
     }
 
     /**
-     * Generates a command execution success message based on whether the note is added or removed.
+     * Generates a command execution success message based on whether the note is
+     * added or removed.
      */
     private String generateSuccessMessage(Person personToEdit) {
         String message = !note.value.isEmpty()
-            ? MESSAGE_ADD_NOTE_SUCCESS
-            : MESSAGE_DELETE_NOTE_SUCCESS;
+                ? MESSAGE_ADD_NOTE_SUCCESS
+                : MESSAGE_DELETE_NOTE_SUCCESS;
         return String.format(message, personToEdit.getName());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
-            || (other instanceof AddNoteCommand
-            && name.equals(((AddNoteCommand) other).name)
-            && note.equals(((AddNoteCommand) other).note));
+                || (other instanceof AddNoteCommand
+                        && name.equals(((AddNoteCommand) other).name)
+                        && note.equals(((AddNoteCommand) other).note));
     }
 }

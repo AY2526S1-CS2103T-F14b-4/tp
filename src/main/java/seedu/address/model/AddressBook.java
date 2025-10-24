@@ -18,17 +18,21 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniquePersonList persons;
 
     /*
-     * The 'unusual' code block below is a non-static initialization block, sometimes used to avoid duplication
-     * between constructors. See https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
+     * The 'unusual' code block below is a non-static initialization block,
+     * sometimes used to avoid duplication
+     * between constructors. See
+     * https://docs.oracle.com/javase/tutorial/java/javaOO/initial.html
      *
-     * Note that non-static init blocks are not recommended to use. There are other ways to avoid duplication
-     *   among constructors.
+     * Note that non-static init blocks are not recommended to use. There are other
+     * ways to avoid duplication
+     * among constructors.
      */
     {
         persons = new UniquePersonList();
     }
 
-    public AddressBook() {}
+    public AddressBook() {
+    }
 
     /**
      * Creates an AddressBook using the Persons in the {@code toBeCopied}
@@ -60,7 +64,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// person-level operations
 
     /**
-     * Returns true if a person with the same identity as {@code person} exists in the address book.
+     * Returns true if a person with the same identity as {@code person} exists in
+     * the address book.
      */
     public boolean hasPerson(Person person) {
         requireNonNull(person);
@@ -76,9 +81,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
+     * Replaces the given person {@code target} in the list with
+     * {@code editedPerson}.
      * {@code target} must exist in the address book.
-     * The person identity of {@code editedPerson} must not be the same as another existing person in the address book.
+     * The person identity of {@code editedPerson} must not be the same as another
+     * existing person in the address book.
      */
     public void setPerson(Person target, Person editedPerson) {
         requireNonNull(editedPerson);

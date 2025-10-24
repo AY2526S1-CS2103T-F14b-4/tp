@@ -37,6 +37,7 @@
       <Label fx:id="offset" styleClass="cell_small_label" text="$offset"/>
       <Label fx:id="preferredLanguage" styleClass="cell_small_label" text="$preferredLanguage"/>
 
+      <Label fx:id="metOn" styleClass="cell_small_label" text="$metOn"/>
     </VBox>
   </GridPane>
 </HBox>
