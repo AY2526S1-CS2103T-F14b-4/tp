@@ -283,6 +283,11 @@ _Details coming soon ..._
 
 --------------------------------------------------------------------------------------------------------------------
 
+## More info
+The Help content will be updated in future releases to include more visual examples.
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Command summary
 
 Action | Format, Examples
