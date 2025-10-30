@@ -259,7 +259,7 @@ public class HelpWindow extends UiPart<Stage> {
         languageNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         languageGreetingsColumn.setCellValueFactory(new PropertyValueFactory<>("greeting"));
 
-        // Wrap long text
+// Wrap long text
         languageGreetingsColumn.setCellFactory(col -> new TableCell<LanguageEntry, String>() {
             private final javafx.scene.text.Text text = new javafx.scene.text.Text();
             {
@@ -580,19 +580,18 @@ public class HelpWindow extends UiPart<Stage> {
         languages.add(new LanguageEntry("Zhuang", "Naeuz"));
         languages.add(new LanguageEntry("Zulu", "Sawubona"));
 
-        // Sort alphabetically
+// Sort alphabetically
         languages.sort(Comparator.comparing(LanguageEntry::getName));
 
-        // FilteredList for search
-        FilteredList<LanguageEntry> filteredLanguages = new FilteredList<>(FXCollections.observableArrayList(languages),
-            p -> true);
+// FilteredList for search
+        FilteredList<LanguageEntry> filteredLanguages = new FilteredList<>(FXCollections.observableArrayList(languages), p -> true);
         languageTableView.setItems(filteredLanguages);
 
         languageSearchField.textProperty().addListener((obs, oldVal, newVal) -> {
             String lower = newVal == null ? "" : newVal.toLowerCase();
             filteredLanguages.setPredicate(lang ->
-                    lang.getName().toLowerCase().contains(lower)
-                        || lang.getGreeting().toLowerCase().contains(lower));
+                    lang.getName().toLowerCase().contains(lower) ||
+                            lang.getGreeting().toLowerCase().contains(lower));
         });
 
         languageTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

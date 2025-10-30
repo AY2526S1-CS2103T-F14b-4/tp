@@ -8,8 +8,8 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Arrays;
 
 import org.junit.jupiter.api.Test;
 
