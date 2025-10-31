@@ -313,7 +313,6 @@ public class HelpWindow extends UiPart<Stage> {
         try (InputStream is = getClass().getResourceAsStream("/greetings.json")) {
             if (is == null) {
                 logger.warning("greetings.json not found in resources. Using default languages.");
-                return getDefaultLanguages();
             }
 
             // First try to read as Map (object format)
@@ -330,7 +329,6 @@ public class HelpWindow extends UiPart<Stage> {
 
             } catch (Exception e) {
                 logger.warning("Failed to parse greetings.json as object, trying as array: " + e.getMessage());
-                // Reset stream and try as array
                 try (InputStream is2 = getClass().getResourceAsStream("/greetings.json")) {
                     return mapper.readValue(is2, new TypeReference<List<LanguageEntry>>() {});
                 }
@@ -338,7 +336,7 @@ public class HelpWindow extends UiPart<Stage> {
 
         } catch (Exception e) {
             logger.severe("Failed to load greetings.json: " + e.getMessage());
-            return getDefaultLanguages();
+            return new ArrayList<>();
         }
     }
 
@@ -375,22 +373,6 @@ public class HelpWindow extends UiPart<Stage> {
             }
         }
         return result.toString();
-    }
-
-    /**
-     * Provides default languages in case JSON loading fails
-     */
-    private List<LanguageEntry> getDefaultLanguages() {
-        return List.of(
-                new LanguageEntry("English", "Hello!"),
-                new LanguageEntry("Spanish", "Hola!"),
-                new LanguageEntry("French", "Bonjour!"),
-                new LanguageEntry("German", "Hallo!"),
-                new LanguageEntry("Chinese", "你好!"),
-                new LanguageEntry("Japanese", "今日は!"),
-                new LanguageEntry("Korean", "안녕하세요!"),
-                new LanguageEntry("Hindi", "नमस्ते!")
-        );
     }
 
     /**
